@@ -39,9 +39,9 @@
  */
 
 
-#include <avr\io.h>       // GPIO definitions
-#include <util\twi.h>     // I2C definitions
-#include <avr\power.h>    // definitions for power saving register
+#include <avr/io.h>       // GPIO definitions
+#include <util/twi.h>     // I2C definitions
+#include <avr/power.h>    // definitions for power saving register
 #include "i2c_phys.h"     // definitions and declarations for the hardware dependent I2C module
 
 
@@ -49,7 +49,7 @@
  * */
 void i2c_enable(void)
 {
-	PRR0 &= ~_BV(PRTWI);            // Disable power saving.
+	PRR &= ~_BV(PRTWI);            // Disable power saving.
 
 #ifdef I2C_PULLUP
 	DDRD &= ~(_BV(PD0) | _BV(PD1)); // Configure I2C as input to allow setting the pull-up resistors.
@@ -64,7 +64,7 @@ void i2c_enable(void)
 void i2c_disable(void)
 {
 	TWCR = 0;                       // Disable TWI.
-	PRR0 |= _BV(PRTWI);             // Enable power saving.
+	PRR |= _BV(PRTWI);             // Enable power saving.
 }
 
 
