@@ -17,23 +17,12 @@
  * along with atsha204-arduino.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-#ifndef LIB_ATSHA204_H_
-#define LIB_ATSHA204_H_
+#include <AtSha204.h>
 
-#include <Arduino.h>
-
-class AtSha204
+AtSha204::AtSha204()
 {
-public:
-AtSha204(uint8_t addr);
-~AtSha204();
 
-protected:
-const uint8_t address;
+}
 
 
-};
-
-
-
-#endif
+AtSha204::~AtSha204() { }
