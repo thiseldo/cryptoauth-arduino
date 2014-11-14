@@ -48,7 +48,7 @@
 #include "sha204_lib_return_codes.h"             // declarations of function return codes
 #include "timer_utilities.h"                     // definitions for delay functions
 
-
+#if defined(SHA204_SWI_BITBANG) || defined(SHA204_SWI_UART)
 /** \defgroup sha204_swi Module 04: SWI Abstraction Module
  *
  * These functions and definitions abstract the SWI hardware. They implement the functions
@@ -215,5 +215,7 @@ uint8_t sha204p_resync(uint8_t size, uint8_t *response)
 	delay_ms(SHA204_SYNC_TIMEOUT);
 	return sha204p_receive_response(size, response);
 }
+
+#endif
 
 /** @} */

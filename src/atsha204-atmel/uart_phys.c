@@ -45,6 +45,7 @@
 #include "uart_config.h"     // UART definitions
 #include "avr_compatible.h"  // translates generic AVR UART macros into specific ones
 
+#ifdef SHA204_SWI_UART
 /** \defgroup atsha204_swi_uart Module 13: UART Interface
  *
  * This module implements the single-wire interface using a UART
@@ -231,5 +232,5 @@ uint8_t swi_receive_bytes(uint8_t count, uint8_t *buffer) {
 
 	return SWI_FUNCTION_RETCODE_SUCCESS;
 }
-
+#endif
 /** @} */
