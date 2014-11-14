@@ -101,6 +101,12 @@
 
 /** @} */
 
+#ifndef SHA204_SWI_BITBANG
+#ifndef SHA204_SWI_UART
+#define SHA204_I2C
+#endif
+#endif
+
 
 #ifdef SHA204_SWI_BITBANG
 /** \name Configuration Definitions for SWI (GPIO) Interface
