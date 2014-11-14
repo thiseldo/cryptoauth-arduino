@@ -103,6 +103,7 @@
 
 #ifndef SHA204_SWI_BITBANG
 #ifndef SHA204_SWI_UART
+/* If not otherwise specified, this is an i2c library */
 #define SHA204_I2C
 #endif
 #endif
