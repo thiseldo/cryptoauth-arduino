@@ -25,7 +25,7 @@
 class AtSha204
 {
 public:
-AtSha204(uint8_t addr);
+AtSha204(const uint8_t addr);
 ~AtSha204();
 
 protected:

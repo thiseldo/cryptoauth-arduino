@@ -19,7 +19,7 @@
  */
 #include <AtSha204.h>
 
-AtSha204::AtSha204()
+AtSha204::AtSha204(const uint8_t addr) : address(addr)
 {
 
 }
