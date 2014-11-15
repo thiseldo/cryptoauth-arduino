@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 /** \file
  *  \brief Definitions for ATSHA204 Library Return Codes
  *  \author Atmel Crypto Products
@@ -69,4 +72,7 @@
 
 /** @} */
 
+#endif
+#ifdef __cplusplus
+}
 #endif

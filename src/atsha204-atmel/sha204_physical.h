@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 /** \file
  *  \brief  Definitions and Prototypes for Physical Layer Interface of ATSHA204 Library
  *  \author Atmel Crypto Products
@@ -76,4 +79,7 @@ uint8_t sha204p_resync(uint8_t size, uint8_t *response);
 
 /** @} */
 
+#endif
+#ifdef __cplusplus
+}
 #endif

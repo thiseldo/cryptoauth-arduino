@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 /** \file
  *  \brief  Definitions and Prototypes for Command Marshaling Layer of ATSHA204 Library
  *  \author Atmel Crypto Products
@@ -467,4 +470,7 @@ uint8_t sha204m_execute(uint8_t op_code, uint8_t param1, uint16_t param2,
 
 /** @} */
 
+#endif
+#ifdef __cplusplus
+}
 #endif
