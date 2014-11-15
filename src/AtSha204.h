@@ -21,16 +21,20 @@
 #define LIB_ATSHA204_H_
 
 #include <Arduino.h>
+#include <CryptoBuffer.h>
 
 class AtSha204
 {
 public:
-AtSha204(const uint8_t addr);
-~AtSha204();
+  AtSha204();
+  ~AtSha204();
+
+  CryptoBuffer rsp;
+  uint8_t getRandom();
 
 protected:
-const uint8_t address;
-
+  static uint8_t command[SHA204_CMD_SIZE_MAX];
+  static uint8_t temp[RANDOM_RSP_SIZE];
 
 };
 

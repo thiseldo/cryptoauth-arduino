@@ -18,11 +18,31 @@
  *
  */
 #include <AtSha204.h>
+#include <atsha204-atmel/sha204_physical.h>
+#include <atsha204-atmel/sha204_comm_marshaling.h>
+#include <atsha204-atmel/sha204_lib_return_codes.h>
 
-AtSha204::AtSha204(const uint8_t addr) : address(addr)
+AtSha204::AtSha204()
 {
-
+  sha204p_init();
 }
 
 
 AtSha204::~AtSha204() { }
+
+uint8_t AtSha204::getRandom()
+{
+  volatile uint8_t ret_code;
+
+  uint8_t *random = &this->temp[SHA204_BUFFER_POS_DATA];
+
+  ret_code = sha204m_random(this->command, this->temp, RANDOM_NO_SEED_UPDATE);
+  if (ret_code == SHA204_SUCCESS)
+    {
+      this->rsp.copyBufferFrom(random, 32);
+    }
+
+
+  sha204p_idle();
+  return ret_code;
+}
