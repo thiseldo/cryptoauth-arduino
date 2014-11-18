@@ -26,3 +26,5 @@
 *.exe
 *.out
 *.app
+/src/atsha204-atmel/sha204_example_main.elf
+/src/atsha204-atmel/sha204_example_main.hex
