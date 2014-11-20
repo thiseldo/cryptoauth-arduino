@@ -4,7 +4,7 @@
 ##########------------------------------------------------------##########
 
 MCU   = atmega328p
-F_CPU = 1000000
+F_CPU = 16000000
 BAUD = 9600
 ## Also try BAUD = 19200 or 38400 if you're feeling lucky.
 
@@ -13,7 +13,7 @@ MAIN = sha204_example_main.c
 
 ## If you've split your program into multiple .c / .h files,
 ## include the additional source (in same directory) here
-LOCAL_SOURCE = avr_compatible.h i2c_phys.c i2c_phys.h sha204_comm.c sha204_comm.h sha204_comm_marshaling.c sha204_comm_marshaling.h sha204_config.h sha204_examples.c sha204_examples.h sha204_helper.c sha204_helper.h sha204_i2c.c sha204_lib_return_codes.h sha204_physical.h timer_utilities.c timer_utilities.h
+LOCAL_SOURCE = avr_compatible.h i2c_phys.c i2c_phys.h sha204_comm.c sha204_comm.h sha204_comm_marshaling.c sha204_comm_marshaling.h sha204_config.h sha204_examples.c sha204_examples.h sha204_helper.c sha204_helper.h sha204_i2c.c sha204_lib_return_codes.h sha204_physical.h timer_utilities.c timer_utilities.h USART.c USART.h binaryMacro.h macros.h pinDefines.h
 
 ## Here you can link to one more directory (and multiple .c files)
 EXTRA_SOURCE_DIR =
