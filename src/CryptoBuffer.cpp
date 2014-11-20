@@ -55,3 +55,11 @@ void CryptoBuffer::copyBufferFrom(uint8_t *src, int len)
             this->len = len;
         }
 }
+
+const void CryptoBuffer::dumpHex(Stream* stream)
+{
+
+  for (int x = 0; x < this->getLength(); x++){
+    stream->print(this->getPointer()[x], HEX);
+  }
+}

@@ -34,6 +34,7 @@ class CryptoBuffer
     const int getMaxBufferSize();
     const int getLength();
     void copyBufferFrom(uint8_t *src, int len);
+    const void dumpHex(Stream* stream);
 
  protected:
     int len;

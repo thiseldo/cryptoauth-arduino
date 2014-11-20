@@ -33,8 +33,8 @@ public:
   uint8_t getRandom();
 
 protected:
-  static uint8_t command[SHA204_CMD_SIZE_MAX];
-  static uint8_t temp[RANDOM_RSP_SIZE];
+  uint8_t command[SHA204_CMD_SIZE_MAX];
+  uint8_t temp[RANDOM_RSP_SIZE];
 
 };
 
