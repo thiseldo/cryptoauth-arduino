@@ -43,17 +43,19 @@
 #include <util/twi.h>     // I2C definitions
 #include <avr/power.h>    // definitions for power saving register
 #include "i2c_phys.h"     // definitions and declarations for the hardware dependent I2C module
-
+#include "Arduino.h"
 
 /** \brief This function initializes and enables the I<SUP>2</SUP>C peripheral.
  * */
 void i2c_enable(void)
 {
+#ifdef HAVE_PRR
 	PRR &= ~_BV(PRTWI);            // Disable power saving.
+#endif
 
 #ifdef I2C_PULLUP
-	DDRD &= ~(_BV(PD0) | _BV(PD1)); // Configure I2C as input to allow setting the pull-up resistors.
-	PORTD |= (_BV(PD0) | _BV(PD1)); // Connect pull-up resistors on TWI clock and data pins.
+        digitalWrite(SDA, 1);
+        digitalWrite(SCL, 1);
 #endif
 
 	TWBR = ((uint8_t) (((double) F_CPU / I2C_CLOCK - 16.0) / 2.0 + 0.5)); // Set the baud rate
@@ -64,7 +66,9 @@ void i2c_enable(void)
 void i2c_disable(void)
 {
 	TWCR = 0;                       // Disable TWI.
+#ifdef HAVE_PRR
 	PRR |= _BV(PRTWI);             // Enable power saving.
+#endif
 }
 
 

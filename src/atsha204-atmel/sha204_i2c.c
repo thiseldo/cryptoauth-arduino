@@ -45,7 +45,9 @@
 #include "i2c_phys.h"                   // hardware dependent declarations for I2C
 #include "sha204_physical.h"            // declarations that are common to all interface implementations
 #include "sha204_lib_return_codes.h"    // declarations of function return codes
-#include "timer_utilities.h"            // definitions for delay functions
+#include "timer_utilities.h"            // definitions for delay
+                                        // Functions
+#include "Arduino.h"
 
 /** \defgroup sha204_i2c Module 05: I2C Abstraction Module
  *
@@ -132,14 +134,14 @@ uint8_t sha204p_wakeup(void)
 	// pulling SDA low. The I2C peripheral gets automatically
 	// re-enabled when calling i2c_send_start().
 	TWCR = 0;           // Disable I2C.
-	DDRD |= _BV(PD1);   // Set SDA as output.
-	PORTD &= ~_BV(PD1); // Set SDA low.
+        pinMode(SDA, OUTPUT);
+        digitalWrite(SDA, LOW);
 #ifndef DEBUG_DIAMOND
 	delay_10us(SHA204_WAKEUP_PULSE_WIDTH);
-#else	
+#else
 	delay_10us(10);
-#endif	
-	PORTD |= _BV(PD1);  // Set SDA high.
+#endif
+	digitalWrite(SDA, HIGH);
 #endif
 
 	delay_ms(SHA204_WAKEUP_DELAY);
@@ -277,7 +279,7 @@ uint8_t sha204p_receive_response(uint8_t size, uint8_t *response)
 	if ((count < SHA204_RSP_SIZE_MIN) || (count > size)) {
 		(void) i2c_send_stop();
 		return SHA204_INVALID_SIZE;
-	}		
+	}
 
 	i2c_status = i2c_receive_bytes(count - 1, &response[SHA204_BUFFER_POS_DATA]);
 
