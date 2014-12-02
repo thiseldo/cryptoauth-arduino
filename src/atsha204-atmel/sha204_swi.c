@@ -43,10 +43,10 @@
  * \atsha204_library_license_stop
 */
 
-#include "swi_phys.h"                            // hardware dependent declarations for SWI
+#include "../common-atmel/swi_phys.h"                            // hardware dependent declarations for SWI
 #include "sha204_physical.h"                     // declarations that are common to all interface implementations
 #include "sha204_lib_return_codes.h"             // declarations of function return codes
-#include "timer_utilities.h"                     // definitions for delay functions
+#include "../common-atmel/timer_utilities.h"                     // definitions for delay functions
 
 #if defined(SHA204_SWI_BITBANG) || defined(SHA204_SWI_UART)
 /** \defgroup sha204_swi Module 04: SWI Abstraction Module

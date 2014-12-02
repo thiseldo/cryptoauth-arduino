@@ -44,10 +44,10 @@
 * \atmel_crypto_device_library_license_stop
 */
 
-#include "swi_phys.h"                            // hardware dependent declarations for SWI
+#include "../common-atmel/swi_phys.h"                            // hardware dependent declarations for SWI
 #include "ecc108_physical.h"                     // declarations that are common to all interface implementations
 #include "ecc108_lib_return_codes.h"             // declarations of function return codes
-#include "timer_utilities.h"                     // definitions for delay functions
+#include "../common-atmel/timer_utilities.h"                     // definitions for delay functions
 
 
 /** \defgroup atecc108_swi Module 04: SWI Abstraction Module
@@ -62,6 +62,7 @@
 #define ECC108_SWI_FLAG_IDLE    ((uint8_t) 0xBB) //!< flag requesting to go into Idle mode
 #define ECC108_SWI_FLAG_SLEEP   ((uint8_t) 0xCC) //!< flag requesting to go into Sleep mode
 
+#ifdef ECC108_SWI_BITBANG || ECC108_SWI_UART
 
 /** \brief This function initializes the hardware.
  */
@@ -216,8 +217,14 @@ uint8_t ecc108p_reset_io(void)
  */
 uint8_t ecc108p_resync(uint8_t size, uint8_t *response)
 {
+#ifdef ECC108_SWI_UART||ECC108_SWI_UART
 	delay_ms(ECC108_SYNC_TIMEOUT);
 	return ecc108p_receive_response(size, response);
+#else
+        return 0;
+#endif
 }
 
 /** @} */
+
+#endif

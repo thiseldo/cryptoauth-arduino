@@ -39,7 +39,7 @@
  */
 
 #include "sha204_comm.h"                // definitions and declarations for the Communication module
-#include "timer_utilities.h"            // definitions for delay functions
+#include "../common-atmel/timer_utilities.h"            // definitions for delay functions
 #include "sha204_lib_return_codes.h"    // declarations of function return codes
 
 

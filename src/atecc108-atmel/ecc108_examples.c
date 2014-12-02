@@ -108,10 +108,10 @@
 #include "ecc108_comm_marshaling.h"   // definitions and declarations for the Command Marshaling module
 #include "ecc108_helper.h"            // definitions of functions that calculate SHA256 for every command
 #include "ecc108_examples.h"          // definitions and declarations for example functions
-#include "timer_utilities.h"          // definitions and declarations for timer functions
+#include "../common-atmel/timer_utilities.h"          // definitions and declarations for timer functions
 
 #if defined ECC108_I2C
-#   include "i2c_phys.h"
+#   include "../common-atmel/i2c_phys.h"
 #elif defined ECC108_I2C_BITBANG
 #   include  "i2c_phys_bitbang.h"
 #else

@@ -107,6 +107,13 @@
 
 /** @} */
 
+#ifndef ECC108_SWI_BITBANG
+#ifndef ECC108_SWI_UART
+/* If not otherwise specified, this is an i2c library */
+#define ECC108_I2C
+#endif
+#endif
+
 ////////////////////////////// GPIO configurations //////////////////////////////
 #ifdef ECC108_SWI_BITBANG
 /** \name Configuration Definitions for SWI (GPIO) Interface

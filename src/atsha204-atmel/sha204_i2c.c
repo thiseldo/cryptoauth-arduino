@@ -42,10 +42,10 @@
 #   include <avr/io.h>					    // GPIO definitions
 #endif
 
-#include "i2c_phys.h"                   // hardware dependent declarations for I2C
+#include "../common-atmel/i2c_phys.h"                   // hardware dependent declarations for I2C
 #include "sha204_physical.h"            // declarations that are common to all interface implementations
 #include "sha204_lib_return_codes.h"    // declarations of function return codes
-#include "timer_utilities.h"            // definitions for delay
+#include "../common-atmel/timer_utilities.h"            // definitions for delay
                                         // Functions
 #include "Arduino.h"
 

@@ -46,12 +46,12 @@
 #ifdef ECC108_I2C_BITBANG
 #   include "i2c_phys_bitbang.h"        // hardware dependent declarations for bit-banged I2C
 #else
-#   include "i2c_phys.h"                // hardware dependent declarations for I2C
+#   include "../common-atmel/i2c_phys.h"                // hardware dependent declarations for I2C
 #endif
 #include "ecc108_config.h"
 #include "ecc108_physical.h"            // declarations that are common to all interface implementations
 #include "ecc108_lib_return_codes.h"    // declarations of function return codes
-#include "timer_utilities.h"            // definitions for delay functions
+#include "../common-atmel/timer_utilities.h"            // definitions for delay functions
 
 /** \defgroup ecc108_i2c Module 05: I2C Abstraction Module
  *
