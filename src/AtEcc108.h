@@ -24,9 +24,17 @@
 
 class AtEcc108 : public AtSha204
 {
+public:
   AtEcc108();
   ~AtEcc108();
 
+
+  uint8_t wakeup();
+  uint8_t getRandom();
+
+protected:
+  const uint8_t ADDRESS;
+  const uint8_t getAddress() const;
 };
 
 #endif
