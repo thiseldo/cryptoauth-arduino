@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 /** \file
  *  \brief ECC108 Library Return Code Definitions
  *  \author Atmel Crypto Products
@@ -70,4 +73,7 @@
 
 /** @} */
 
+#endif
+#ifdef __cplusplus
+}
 #endif

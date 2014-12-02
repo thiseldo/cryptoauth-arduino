@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 /** \file
  *  \brief  Definitions and Prototypes for Communication Layer of ECC108 Library
  *  \author Atmel Crypto Products
@@ -104,4 +107,7 @@ uint8_t ecc108c_send_and_receive(uint8_t *tx_buffer, uint8_t rx_size, uint8_t *r
 uint8_t ecc108c_resync(uint8_t size, uint8_t *response);
 /** @} */
 
+#endif
+#ifdef __cplusplus
+}
 #endif

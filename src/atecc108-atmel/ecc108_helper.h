@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 /** \file
  *  \brief  Definitions and Prototypes for ECC108 Helper Functions
  *  \author Atmel Crypto Products
@@ -429,3 +432,6 @@ uint8_t *ecc108h_include_data(struct ecc108h_include_data_in_out *param);
 /** @} */
 
 #endif //ECC108_HELPER_H
+#ifdef __cplusplus
+}
+#endif
