@@ -51,7 +51,10 @@
 #include "ecc108_config.h"
 #include "ecc108_physical.h"            // declarations that are common to all interface implementations
 #include "ecc108_lib_return_codes.h"    // declarations of function return codes
-#include "../common-atmel/timer_utilities.h"            // definitions for delay functions
+#include "../common-atmel/timer_utilities.h"            // definitions
+                                                        // for delay
+                                                        // functions
+#include "Arduino.h"
 
 /** \defgroup ecc108_i2c Module 05: I2C Abstraction Module
  *
@@ -142,10 +145,13 @@ uint8_t ecc108p_wakeup(void)
 	// PORTD is used on the Microbase. You might have to use another
 	// port for a different target.
 	TWCR = 0;           // Disable I2C.
-	DDRD |= _BV(PD1);   // Set SDA as output.
-	PORTD &= ~_BV(PD1); // Set SDA low.
+	//DDRD |= _BV(PD1);   // Set SDA as output.
+	//PORTD &= ~_BV(PD1); // Set SDA low.
+        pinMode(SDA, OUTPUT);
+        digitalWrite(SDA, LOW);
 	delay_10us(ECC108_WAKEUP_PULSE_WIDTH);
-	PORTD |= _BV(PD1);  // Set SDA high.
+	//PORTD |= _BV(PD1);  // Set SDA high.
+        digitalWrite(SDA, HIGH);
 #   endif
 #endif
 
