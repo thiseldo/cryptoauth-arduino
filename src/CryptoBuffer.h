@@ -26,22 +26,21 @@
 
 class CryptoBuffer
 {
- public:
-    CryptoBuffer();
-    ~CryptoBuffer();
+public:
+  CryptoBuffer();
+  ~CryptoBuffer();
 
-    const uint8_t *getPointer();
-    const int getMaxBufferSize();
-    const int getLength();
-    void copyBufferFrom(uint8_t *src, int len);
-    const void dumpHex(Stream* stream);
+  const uint8_t *getPointer();
+  const int getMaxBufferSize();
+  const int getLength();
+  void copyBufferFrom(uint8_t *src, int len);
+  const void dumpHex(Stream* stream);
+  void clear();
 
- protected:
-    int len;
+protected:
+  int len;
 
-    uint8_t buf[SHA204_RSP_SIZE_MAX];
-    void clear();
-
+  uint8_t buf[SHA204_RSP_SIZE_MAX];
 
 };
 

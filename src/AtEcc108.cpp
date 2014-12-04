@@ -53,6 +53,7 @@ uint8_t AtEcc108::getRandom()
     //ret_code = ecc108m_random(this->command, this->temp,
     //RANDOM_NO_SEED_UPDATE);
 
+    this->rsp.clear();
     this->wakeup();
 
     ret_code = ecc108m_execute(ECC108_RANDOM, RANDOM_NO_SEED_UPDATE, 0x0000, 0,

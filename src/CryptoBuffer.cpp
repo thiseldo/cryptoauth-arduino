@@ -22,7 +22,6 @@
 CryptoBuffer::CryptoBuffer()
 {
     this->clear();
-    this->len = 0;
 }
 
 CryptoBuffer::~CryptoBuffer() { }
@@ -30,6 +29,7 @@ CryptoBuffer::~CryptoBuffer() { }
 void CryptoBuffer::clear()
 {
     memset(&this->buf[0], 0, this->getMaxBufferSize());
+    this->len = 0;
 }
 
 const int CryptoBuffer::getLength()
