@@ -31,10 +31,12 @@ public:
 
   CryptoBuffer rsp;
   uint8_t getRandom();
+  void enableDebug(Stream* stream);
 
 protected:
   uint8_t command[SHA204_CMD_SIZE_MAX];
   uint8_t temp[RANDOM_RSP_SIZE];
+  Stream *debugStream = NULL;
 
 };
 

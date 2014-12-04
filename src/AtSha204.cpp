@@ -46,3 +46,9 @@ uint8_t AtSha204::getRandom()
   sha204p_idle();
   return ret_code;
 }
+
+
+void AtSha204::enableDebug(Stream* stream)
+{
+  this->debugStream = stream;
+}
