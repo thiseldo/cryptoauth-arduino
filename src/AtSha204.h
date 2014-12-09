@@ -31,6 +31,8 @@ public:
 
   CryptoBuffer rsp;
   uint8_t getRandom();
+  uint8_t macBasic(uint8_t *to_mac, int len);
+  uint8_t checkMacBasic(uint8_t *to_mac, int len, uint8_t *rsp);
   void enableDebug(Stream* stream);
 
 protected:

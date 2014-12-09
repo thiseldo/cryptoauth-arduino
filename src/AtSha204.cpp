@@ -36,6 +36,8 @@ uint8_t AtSha204::getRandom()
 
   uint8_t *random = &this->temp[SHA204_BUFFER_POS_DATA];
 
+  sha204p_wakeup();
+
   ret_code = sha204m_random(this->command, this->temp, RANDOM_NO_SEED_UPDATE);
   if (ret_code == SHA204_SUCCESS)
     {
@@ -51,4 +53,47 @@ uint8_t AtSha204::getRandom()
 void AtSha204::enableDebug(Stream* stream)
 {
   this->debugStream = stream;
+}
+
+
+uint8_t AtSha204::macBasic(uint8_t *to_mac, int len)
+{
+  uint16_t key_id = 0;
+  uint8_t mode = MAC_MODE_CHALLENGE;
+  uint8_t rc;
+
+  if (MAC_CHALLENGE_SIZE != len)
+    return SHA204_BAD_PARAM;
+
+  sha204p_wakeup();
+
+  if (SHA204_SUCCESS ==
+      (rc = sha204m_mac(this->command, this->temp, mode, key_id, to_mac)))
+    {
+      this->rsp.copyBufferFrom(&this->temp[SHA204_BUFFER_POS_DATA], 32);
+    }
+
+  sha204p_idle();
+  return rc;
+
+}
+
+uint8_t AtSha204::checkMacBasic(uint8_t *to_mac, int len, uint8_t *rsp)
+{
+  uint16_t key_id = 0;
+  uint8_t mode = MAC_MODE_CHALLENGE;
+  uint8_t other_data[13] = {0};
+  uint8_t rc;
+
+  if (MAC_CHALLENGE_SIZE != len)
+    return SHA204_BAD_PARAM;
+
+  sha204p_wakeup();
+
+  rc = sha204m_check_mac(this->command, this->temp,
+                         mode, key_id, to_mac, rsp, other_data);
+
+  sha204p_idle();
+  return rc;
+
 }
