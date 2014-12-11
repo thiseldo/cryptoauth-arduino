@@ -78,7 +78,7 @@ uint8_t AtSha204::macBasic(uint8_t *to_mac, int len)
 
 }
 
-uint8_t AtSha204::checkMacBasic(uint8_t *to_mac, int len, uint8_t *rsp) const
+uint8_t AtSha204::checkMacBasic(uint8_t *to_mac, int len, uint8_t *rsp)
 {
   uint16_t key_id = 0;
   uint8_t mode = MAC_MODE_CHALLENGE;
@@ -100,7 +100,7 @@ uint8_t AtSha204::checkMacBasic(uint8_t *to_mac, int len, uint8_t *rsp) const
 }
 
 
-uint8_t AtSha204::checkResponseStatus(uint8_t ret_code, uint8_t *response)
+uint8_t AtSha204::checkResponseStatus(uint8_t ret_code, uint8_t *response) const
 {
   if (ret_code != SHA204_SUCCESS)
     {
