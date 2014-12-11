@@ -78,7 +78,7 @@ uint8_t AtSha204::macBasic(uint8_t *to_mac, int len)
 
 }
 
-uint8_t AtSha204::checkMacBasic(uint8_t *to_mac, int len, uint8_t *rsp)
+uint8_t AtSha204::checkMacBasic(uint8_t *to_mac, int len, uint8_t *rsp) const
 {
   uint16_t key_id = 0;
   uint8_t mode = MAC_MODE_CHALLENGE;
@@ -88,6 +88,7 @@ uint8_t AtSha204::checkMacBasic(uint8_t *to_mac, int len, uint8_t *rsp)
   if (MAC_CHALLENGE_SIZE != len)
     return SHA204_BAD_PARAM;
 
+  other_data[0] = 0x08;
   sha204p_wakeup();
 
   rc = sha204m_check_mac(this->command, this->temp,
@@ -96,4 +97,17 @@ uint8_t AtSha204::checkMacBasic(uint8_t *to_mac, int len, uint8_t *rsp)
   sha204p_idle();
   return rc;
 
+}
+
+
+uint8_t AtSha204::checkResponseStatus(uint8_t ret_code, uint8_t *response)
+{
+  if (ret_code != SHA204_SUCCESS)
+    {
+      return ret_code;
+    }
+
+  ret_code = response[SHA204_BUFFER_POS_STATUS];
+
+  return ret_code;
 }

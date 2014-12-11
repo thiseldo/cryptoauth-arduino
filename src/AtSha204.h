@@ -39,6 +39,7 @@ protected:
   uint8_t command[SHA204_CMD_SIZE_MAX];
   uint8_t temp[RANDOM_RSP_SIZE];
   Stream *debugStream = NULL;
+  uint8_t checkResponseStatus(uint8_t ret_code, uint8_t *response) const;
 
 };
 
