@@ -32,13 +32,16 @@ public:
   uint8_t wakeup();
   uint8_t getRandom();
   uint8_t personalize();
+  bool is_locked(const uint8_t ZONE);
+  void burn_otp();
+  uint8_t lock_data_zone();
 
 
 protected:
   const uint8_t ADDRESS;
   const uint8_t getAddress() const;
   const uint8_t write(uint8_t zone, uint16_t address, uint8_t *new_value,
-                      uint8_t *mac);
+                      uint8_t *mac, uint8_t size);
   void idle();
   void burn_config();
   uint8_t lock_config_zone();
