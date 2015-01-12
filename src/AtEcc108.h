@@ -31,10 +31,19 @@ public:
 
   uint8_t wakeup();
   uint8_t getRandom();
+  uint8_t personalize();
+
 
 protected:
   const uint8_t ADDRESS;
   const uint8_t getAddress() const;
+  const uint8_t write(uint8_t zone, uint16_t address, uint8_t *new_value,
+                      uint8_t *mac);
+  void idle();
+  void burn_config();
+  uint8_t lock_config_zone();
+  uint8_t read_config_zone(uint8_t *config_data);
+
 };
 
 #endif

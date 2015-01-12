@@ -30,6 +30,11 @@ AtSha204::AtSha204()
 
 AtSha204::~AtSha204() { }
 
+void AtSha204::idle()
+{
+    sha204p_idle();
+}
+
 uint8_t AtSha204::getRandom()
 {
   volatile uint8_t ret_code;
