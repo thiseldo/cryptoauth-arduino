@@ -416,3 +416,70 @@ bool AtEcc108::is_locked(const uint8_t ZONE)
 
   return status;
 }
+
+int AtEcc108::load_nonce(uint8_t *to_load, int len)
+{
+  // Pass the message to be signed using Nonce command with mode =
+  // 0x03.
+  uint8_t *rsp_ptr = &this->temp[ECC108_BUFFER_POS_DATA];
+
+  this->rsp.clear();
+
+  this->wakeup();
+
+  int ret_code =
+    ecc108m_execute(ECC108_NONCE,
+                    NONCE_MODE_PASSTHROUGH,
+                    NONCE_MODE_RANDOM_OUT,
+                    NONCE_NUMIN_SIZE_PASSTHROUGH,
+                    to_load,
+                    0, NULL, 0, NULL,
+                    sizeof(this->command), this->command,
+                    sizeof(this->temp), this->temp);
+
+  this->idle();
+
+  return ret_code;
+}
+
+int AtEcc108::sign_tempkey(const uint8_t KEY_ID)
+{
+  this->rsp.clear();
+
+  this->wakeup();
+
+  int ret_code =
+    ecc108m_execute(ECC108_SIGN,
+                    SIGN_MODE_EXTERNAL,
+                    KEY_ID,
+                    0, NULL, 0, NULL, 0, NULL,
+                    sizeof(this->command), this->command,
+                    sizeof(this->temp), this->temp);
+
+  this->idle();
+
+  return ret_code;
+
+}
+
+
+uint8_t AtEcc108::sign(uint8_t *data, int len_32)
+{
+  int ret_code = this->load_nonce(data, len_32);
+
+  uint8_t *rsp_ptr = &this->temp[ECC108_BUFFER_POS_DATA];
+
+  if (ECC108_SUCCESS == ret_code)
+    {
+      if ((ret_code = this->sign_tempkey(0)) == ECC108_SUCCESS)
+        {
+          this->rsp.copyBufferFrom(rsp_ptr, SIGN_RSP_SIZE);
+        }
+    }
+
+  this->idle();
+
+  return ret_code;
+
+
+}

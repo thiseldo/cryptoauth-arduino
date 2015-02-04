@@ -35,6 +35,7 @@ public:
   bool is_locked(const uint8_t ZONE);
   void burn_otp();
   uint8_t lock_data_zone();
+  uint8_t sign(uint8_t *data, int len_32);
 
 
 protected:
@@ -46,6 +47,8 @@ protected:
   void burn_config();
   uint8_t lock_config_zone();
   uint8_t read_config_zone(uint8_t *config_data);
+  int load_nonce(uint8_t *to_load, int len);
+  int sign_tempkey(const uint8_t KEY_ID);
 
 };
 
