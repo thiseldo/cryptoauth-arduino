@@ -22,6 +22,9 @@
 
 #include <Arduino.h>
 #include <CryptoBuffer.h>
+#include <atsha204-atmel/sha204_comm_marshaling.h>
+#include "atecc108-atmel/ecc108_physical.h"
+#include "atecc108-atmel/ecc108_comm.h"
 
 class AtSha204
 {
@@ -36,8 +39,8 @@ public:
   void enableDebug(Stream* stream);
 
 protected:
-  uint8_t command[SHA204_CMD_SIZE_MAX];
-  uint8_t temp[RANDOM_RSP_SIZE];
+  uint8_t command[ECC108_CMD_SIZE_MAX];
+  uint8_t temp[ECC108_RSP_SIZE_MAX];
   Stream *debugStream = NULL;
   uint8_t checkResponseStatus(uint8_t ret_code, uint8_t *response) const;
   void idle();
