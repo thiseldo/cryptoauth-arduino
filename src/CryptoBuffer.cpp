@@ -18,6 +18,7 @@
  *
  */
 #include <CryptoBuffer.h>
+#include <stdio.h>
 
 CryptoBuffer::CryptoBuffer()
 {
@@ -44,7 +45,7 @@ const uint8_t *CryptoBuffer::getPointer()
 
 const int CryptoBuffer::getMaxBufferSize()
 {
-    return SHA204_RSP_SIZE_MAX;
+  return sizeof(this->buf);
 }
 
 void CryptoBuffer::copyBufferFrom(uint8_t *src, int len)
@@ -58,8 +59,9 @@ void CryptoBuffer::copyBufferFrom(uint8_t *src, int len)
 
 const void CryptoBuffer::dumpHex(Stream* stream)
 {
-
+  char temp[3] = {};
   for (int x = 0; x < this->getLength(); x++){
-    stream->print(this->getPointer()[x], HEX);
+    sprintf(temp, "%02x",this->getPointer()[x]);
+    stream->print(temp);
   }
 }
