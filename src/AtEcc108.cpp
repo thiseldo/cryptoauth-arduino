@@ -60,15 +60,19 @@ AtEcc108::~AtEcc108() { }
 
 void AtEcc108::idle()
 {
-  ecc108p_idle();
+  if (this->always_idle)
+    ecc108p_idle();
 }
 
 uint8_t AtEcc108::wakeup()
 {
-    uint8_t wakeup_response[ECC108_RSP_SIZE_MIN];
+  if (!this->always_wakeup)
+    return 0;
 
-    memset(wakeup_response, 0, sizeof(wakeup_response));
-    return ecc108c_wakeup(wakeup_response);
+  uint8_t wakeup_response[ECC108_RSP_SIZE_MIN];
+
+  memset(wakeup_response, 0, sizeof(wakeup_response));
+  return ecc108c_wakeup(wakeup_response);
 }
 
 const uint8_t AtEcc108::getAddress() const
@@ -76,7 +80,7 @@ const uint8_t AtEcc108::getAddress() const
     return this->ADDRESS;
 }
 
-uint8_t AtEcc108::getRandom()
+uint8_t AtEcc108::getRandom(bool update_seed)
 {
     volatile uint8_t ret_code;
 
@@ -84,11 +88,17 @@ uint8_t AtEcc108::getRandom()
 
     //ret_code = ecc108m_random(this->command, this->temp,
     //RANDOM_NO_SEED_UPDATE);
+    uint8_t SEED_UPDATE;
+
+    if (update_seed)
+      SEED_UPDATE = RANDOM_SEED_UPDATE;
+    else
+      SEED_UPDATE = RANDOM_NO_SEED_UPDATE;
 
     this->rsp.clear();
     this->wakeup();
 
-    ret_code = ecc108m_execute(ECC108_RANDOM, RANDOM_NO_SEED_UPDATE, 0x0000, 0,
+    ret_code = ecc108m_execute(ECC108_RANDOM, SEED_UPDATE, 0x0000, 0,
                                NULL, 0, NULL, 0, NULL, sizeof(this->command),
                                this->command,
                                sizeof(this->temp), this->temp);
@@ -465,21 +475,34 @@ int AtEcc108::sign_tempkey(const uint8_t KEY_ID)
 
 uint8_t AtEcc108::sign(uint8_t *data, int len_32)
 {
-  int ret_code = this->load_nonce(data, len_32);
-
   uint8_t *rsp_ptr = &this->temp[ECC108_BUFFER_POS_DATA];
+
+  int ret_code = this->getRandom(true);
 
   if (ECC108_SUCCESS == ret_code)
     {
-      if ((ret_code = this->sign_tempkey(0)) == ECC108_SUCCESS)
+      if ((ret_code = this->load_nonce(data, len_32)) == ECC108_SUCCESS)
         {
-          this->rsp.copyBufferFrom(rsp_ptr, SIGN_RSP_SIZE);
+          if ((ret_code = this->sign_tempkey(0)) == ECC108_SUCCESS)
+            {
+              this->rsp.copyBufferFrom(rsp_ptr, VERIFY_256_SIGNATURE_SIZE);
+            }
         }
     }
-
-  this->idle();
 
   return ret_code;
 
 
+}
+
+void AtEcc108::disableIdleWake()
+{
+  this->always_idle = false;
+  this->always_wakeup = false;
+}
+
+void AtEcc108::enableIdleWake()
+{
+  this->always_idle = true;
+  this->always_wakeup = true;
 }
