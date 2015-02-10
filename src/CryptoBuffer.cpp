@@ -64,4 +64,6 @@ const void CryptoBuffer::dumpHex(Stream* stream)
     sprintf(temp, "%02x",this->getPointer()[x]);
     stream->print(temp);
   }
+
+  stream->write("\n");
 }
