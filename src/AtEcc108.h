@@ -37,6 +37,10 @@ public:
   void burn_otp();
   uint8_t lock_data_zone();
   uint8_t sign(uint8_t *data, int len_32);
+  uint8_t verify(uint8_t *data, int len_32,
+                 uint8_t *pub_key,
+                 uint8_t *signature);
+  uint8_t getPubKey(const uint8_t KEY_ID);
 
 
 
@@ -51,6 +55,10 @@ protected:
   uint8_t read_config_zone(uint8_t *config_data);
   int load_nonce(uint8_t *to_load, int len);
   int sign_tempkey(const uint8_t KEY_ID);
+  uint8_t verify_tempkey(const uint8_t KEY_ID,
+                         uint8_t *pub_key,
+                         uint8_t *signature);
+
 
   bool always_idle = true;
   bool always_wakeup = true;

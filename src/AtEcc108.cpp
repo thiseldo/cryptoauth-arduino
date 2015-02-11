@@ -495,6 +495,70 @@ uint8_t AtEcc108::sign(uint8_t *data, int len_32)
 
 }
 
+uint8_t AtEcc108::getPubKey(const uint8_t KEY_ID)
+{
+  uint8_t *rsp_ptr = &this->temp[ECC108_BUFFER_POS_DATA];
+
+  this->rsp.clear();
+
+  this->wakeup();
+
+  int ret_code =
+    ecc108m_execute(ECC108_GENKEY, GENKEY_MODE_PUBLIC,
+                    KEY_ID, 0, NULL, 0, NULL, 0, NULL,
+                    sizeof(this->command), this->command,
+                    sizeof(this->temp), this->temp);
+
+  if (0 == ret_code)
+    this->rsp.copyBufferFrom(rsp_ptr, VERIFY_256_KEY_SIZE);
+
+  return ret_code;
+}
+
+uint8_t AtEcc108::verify_tempkey(const uint8_t KEY_ID,
+                                 uint8_t *pub_key,
+                                 uint8_t *signature)
+{
+  this->rsp.clear();
+
+  this->wakeup();
+
+  int ret_code =
+    ecc108m_execute(ECC108_VERIFY, VERIFY_MODE_EXTERNAL,
+                    VERIFY_KEY_P256, VERIFY_256_SIGNATURE_SIZE,
+                    signature,
+                    VERIFY_256_KEY_SIZE,
+                    pub_key, 0, NULL,
+                    sizeof(this->command), command,
+                    sizeof(this->temp),
+                    this->temp);
+
+  if (0 == ret_code)
+    {
+      ret_code = this->temp[ECC108_BUFFER_POS_DATA];
+    }
+
+
+  this->idle();
+
+  return ret_code;
+
+}
+
+uint8_t AtEcc108::verify(uint8_t *data, int len_32,
+                         uint8_t *pub_key,
+                         uint8_t *signature)
+{
+  int ret_code = -1;
+
+  if ((ret_code = this->load_nonce(data, len_32)) == ECC108_SUCCESS)
+    {
+      ret_code = this->verify_tempkey(0, pub_key, signature);
+    }
+
+  return ret_code;
+}
+
 void AtEcc108::disableIdleWake()
 {
   this->always_idle = false;
