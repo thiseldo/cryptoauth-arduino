@@ -17,33 +17,28 @@
  * along with cryptoauth-arduino.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-#ifndef LIB_ATSHA204_H_
-#define LIB_ATSHA204_H_
+#ifndef LIB_CRYPTOBUFFER_H_
+#define LIB_CRYPTOBUFFER_H_
 
 #include <Arduino.h>
-#include <CryptoBuffer.h>
-#include <atsha204-atmel/sha204_comm_marshaling.h>
-#include "atecc108-atmel/ecc108_physical.h"
-#include "atecc108-atmel/ecc108_comm.h"
-
-class AtSha204
+#include "../atecc108-atmel/ecc108_physical.h"
+class CryptoBuffer
 {
 public:
-  AtSha204();
-  ~AtSha204();
+  CryptoBuffer();
+  ~CryptoBuffer();
 
-  CryptoBuffer rsp;
-  uint8_t getRandom();
-  uint8_t macBasic(uint8_t *to_mac, int len);
-  uint8_t checkMacBasic(uint8_t *to_mac, int len, uint8_t *rsp);
-  void enableDebug(Stream* stream);
+  const uint8_t *getPointer();
+  const int getMaxBufferSize();
+  const int getLength();
+  void copyBufferFrom(uint8_t *src, int len);
+  const void dumpHex(Stream* stream);
+  void clear();
 
 protected:
-  uint8_t command[ECC108_CMD_SIZE_MAX];
-  uint8_t temp[ECC108_RSP_SIZE_MAX];
-  Stream *debugStream = NULL;
-  uint8_t checkResponseStatus(uint8_t ret_code, uint8_t *response) const;
-  void idle();
+  int len;
+
+  uint8_t buf[ECC108_RSP_SIZE_MAX];
 
 };
 

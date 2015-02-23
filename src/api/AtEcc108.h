@@ -21,7 +21,7 @@
 #define LIB_ATECC108_H_
 
 #include "AtSha204.h"
-#include "atecc108-atmel/ecc108_physical.h"
+#include "../atecc108-atmel/ecc108_physical.h"
 
 class AtEcc108 : public AtSha204
 {

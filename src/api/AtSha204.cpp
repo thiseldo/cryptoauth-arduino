@@ -17,10 +17,10 @@
  * along with cryptoauth-arduino.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-#include <AtSha204.h>
-#include <atsha204-atmel/sha204_physical.h>
-#include <atsha204-atmel/sha204_comm_marshaling.h>
-#include <atsha204-atmel/sha204_lib_return_codes.h>
+#include "AtSha204.h"
+#include "../atsha204-atmel/sha204_physical.h"
+#include "../atsha204-atmel/sha204_comm_marshaling.h"
+#include "../atsha204-atmel/sha204_lib_return_codes.h"
 
 AtSha204::AtSha204()
 {

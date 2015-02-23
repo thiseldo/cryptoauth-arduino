@@ -17,10 +17,10 @@
  * along with cryptoauth-arduino.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-#include <AtEcc108.h>
-#include <atecc108-atmel/ecc108_physical.h>
-#include <atecc108-atmel/ecc108_comm_marshaling.h>
-#include <atecc108-atmel/ecc108_lib_return_codes.h>
+#include "AtEcc108.h"
+#include "../atecc108-atmel/ecc108_physical.h"
+#include "../atecc108-atmel/ecc108_comm_marshaling.h"
+#include "../atecc108-atmel/ecc108_lib_return_codes.h"
 
 
 static const uint8_t default_config_zone[] =

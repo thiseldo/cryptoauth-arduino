@@ -17,7 +17,7 @@
  * along with cryptoauth-arduino.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-#include <CryptoBuffer.h>
+#include "CryptoBuffer.h"
 #include <stdio.h>
 
 CryptoBuffer::CryptoBuffer()
