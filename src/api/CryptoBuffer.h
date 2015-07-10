@@ -21,7 +21,7 @@
 #define LIB_CRYPTOBUFFER_H_
 
 #include <Arduino.h>
-#include "../atecc108-atmel/ecc108_physical.h"
+#include "../ateccX08-atmel/eccX08_physical.h"
 class CryptoBuffer
 {
 public:
@@ -38,7 +38,7 @@ public:
 protected:
   int len;
 
-  uint8_t buf[ECC108_RSP_SIZE_MAX];
+  uint8_t buf[ECCX08_RSP_SIZE_MAX];
 
 };
 

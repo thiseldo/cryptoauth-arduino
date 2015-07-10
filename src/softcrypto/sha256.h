@@ -48,6 +48,10 @@
  * defines the size of a SHA-256 input block in bytes
  */
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 #define SHA256_HASH_BITS  256
 #define SHA256_HASH_BYTES (SHA256_HASH_BITS/8)
 #define SHA256_BLOCK_BITS 512
@@ -119,4 +123,7 @@ void sha256_ctx2hash(sha256_hash_t *dest, const sha256_ctx_t *state);
  */
 void sha256(sha256_hash_t *dest, const void *msg, uint32_t length_b);
 
+#ifdef __cplusplus
+} // extern "C"
+#endif
 #endif /*SHA256_H_*/

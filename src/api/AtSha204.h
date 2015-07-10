@@ -23,8 +23,8 @@
 #include <Arduino.h>
 #include "CryptoBuffer.h"
 #include "../atsha204-atmel/sha204_comm_marshaling.h"
-#include "../atecc108-atmel/ecc108_physical.h"
-#include "../atecc108-atmel/ecc108_comm.h"
+#include "../ateccX08-atmel/eccX08_physical.h"
+#include "../ateccX08-atmel/eccX08_comm.h"
 
 class AtSha204
 {
@@ -37,10 +37,12 @@ public:
   uint8_t macBasic(uint8_t *to_mac, int len);
   uint8_t checkMacBasic(uint8_t *to_mac, int len, uint8_t *rsp);
   void enableDebug(Stream* stream);
+  void calculate_sha256(int32_t len, uint8_t *message, uint8_t *digest);
+
 
 protected:
-  uint8_t command[ECC108_CMD_SIZE_MAX];
-  uint8_t temp[ECC108_RSP_SIZE_MAX];
+  uint8_t command[ECCX08_CMD_SIZE_MAX];
+  uint8_t temp[ECCX08_RSP_SIZE_MAX];
   Stream *debugStream = NULL;
   uint8_t checkResponseStatus(uint8_t ret_code, uint8_t *response) const;
   void idle();
