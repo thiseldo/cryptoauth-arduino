@@ -1,9 +1,16 @@
-[![Stories in Ready](https://badge.waffle.io/cryptotronix/cryptoauth-arduino.png?label=ready&title=Ready)](https://waffle.io/cryptotronix/cryptoauth-arduino)
 cryptoauth-arduino
 ==================
 
-An Arduino library for Atmel's CryptoAuthentication Devices (ATSHA204x
-and ATECC108x).
+An Arduino library for Atmel's CryptoAuthentication Devices (ATSHA204x,
+ATECC108x and ATECC508A).
+
+This version is a fork of the original Cryptotronix cryptoauth-arduino library with the following changes:
+1. Replace Atmel code with updated code that supports the ATECC508 chips
+2. Update API to implement additional functionality to retrieve chip info, lock individual slots, add key selection to sign and verify functions.
+3. Provide a comprehensive example/demo sketch covering personalization, public and private key generation, SHA256 hash generation, message signing and verification functions.
+
+Original Readme below:
+
 
 ***WARNING***
 -------------
