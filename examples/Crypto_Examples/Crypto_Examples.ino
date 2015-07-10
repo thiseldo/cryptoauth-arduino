@@ -43,7 +43,7 @@ static char menu_items[NUM_MENU_ITEM][17] = {
   // -----------------
   "Chip Info",
   "Personalize",
-  "Randon Number",
+  "Random Number",
   "Gen Private Key",
   "Get Public Key",
   "Lock key slot",
