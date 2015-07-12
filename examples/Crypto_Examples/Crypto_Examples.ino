@@ -195,14 +195,15 @@ void hexify(const char *str, const uint8_t *hex, unsigned int len) {
   int i;
 
   Serial.write(str);
-
   for (i = 0; i < len; i++)  {
     static char tmp[4] = {};
     sprintf(tmp, "%02X", hex[i]);
     Serial.write(tmp);
   }
 
-  Serial.write("\n");
+//  Serial.write("\n");
+  Serial.println();
+
 }
 
 /** displayResponse - take a low I2C driver response code and display
@@ -225,6 +226,7 @@ void displayResponse( uint8_t respCode, uint8_t keyNum ) {
     default:
       Serial.print(respCode, HEX);
   }
+  Serial.println();
 }
 
 /** isSlotLocked - use previously saved flags to test if a key slot has been locked.
@@ -264,8 +266,8 @@ int getKeyNum() {
   while ( !lineEndFound ) {
     if ( Serial.available() ) {
       int inDigit = Serial.read();
-      //      Serial.write( inDigit );
       if ( inDigit >= '0' && inDigit <= '9' ) {
+        Serial.print( (char)inDigit );
         keyNum *= 10;
         keyNum += (inDigit - '0');
       } else if ( inDigit == '\n' || inDigit == '\r' )
@@ -285,6 +287,7 @@ boolean getConfirm() {
   while ( 1 ) {
     if ( Serial.available()) {
       int inByte = Serial.read();
+      Serial.write(inByte);
       if ( inByte == 'Y' || inByte == 'y' )
         return true;
       else
@@ -316,7 +319,7 @@ void getInputData( uint8_t *data, unsigned int maxLen ) {
   boolean lineEndFound = false;
   consumeInput();
   while ( len < maxLen && !lineEndFound) {
-    if ( Serial.available() > 1) {
+    if ( Serial.available() ) {
       int inByte = Serial.read();
       Serial.write(inByte);
       if ( inByte == '\n' || inByte == '\r' ) {
@@ -342,6 +345,7 @@ void getHexInputData( uint8_t *data, unsigned int requiredLen ) {
   uint8_t value = 0;
   consumeInput();
   while ( len < requiredLen ) {
+    // Needs to read in 2 characters at a time
     if ( Serial.available() > 1) {
       int inByte = Serial.read();
       Serial.write(inByte);
@@ -611,20 +615,6 @@ void menuLockKeySlot() {
   }
 }
 
-// Keys from 01235052D92CA571EE
-//  0: 0A6205952C914DDBE3CAC77259D35B017827D86A70D220B0F604D756EB0136525A35AC279B7CE4C0EC0807F47C080D62D6C5D34EFA88E76EF106C33F5BE3B726
-//  1: FDEDC7D39C335172F7D8A2908E9CF5FE36FD9F753061C7E31992A0ECA6F50EA1238B461416686779955AE514368E3768406E648BF5B7D42C153C8048789D7F02
-//  2: AD659614A491F12286073F2C47D396B64FCDB06F337890080F5DB91848B749644711810FFBA30808187DDE66A38587C70F760B15075093B79CA863D80E6E9E5F
-//  3: 598988F3C6E24F0DCA89B67E396EF75DE807106A24854660456FCACC657DD3365D70B9FCBA4E8CF518FBFAE19FB61F7C7676E0C07CDFA8CD2560C1CD10613D65
-//  4: 7618F80A17F38F36119ECC31D79DE04A3740C84A70B00B452770EE277928CCE0AA5FDE76B44A4E0577AE3AACB350EFA1C2F0EEF48DB4418C83007109CAD49D46
-//  5: 7CCA84A69659A644A8CC4B58382F7E1A8737E98831D2C71609269AFABB34F3F61794AA368A3E4213F8A412037E367C7CA35EAADD31E16CF7AA13A36506A79FAC
-
-// 15: 26712508A3544575F38526FA3D6AAAF920728A3ABDF2421841243F1961222944AF116DDFB4AF797EA70FCD09C9FEBC490793C271165410FAF3672BE5FD8D1B5D
-// 00000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000BC7F000000000000
-// BC7F
-// 9C7F
-// lock slot 5, 24, 25
-// 00000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000009C7F000000000000
 /*
 void menuDumpConfig() {
   Serial.println(F("\n\rGet Key Slot Config"));
@@ -690,9 +680,6 @@ void menuSignData() {
       Serial.println(ret, HEX);
     else {
       memcpy (hash, ecc.rsp.getPointer(), sizeof(hash));
-      // Display Hash for debug purposes
-//      hexify("Hash: ", (const uint8_t *) hash, sizeof(hash));
-
       if (0 != ecc.sign(keyNum, &hash[0], sizeof(hash)))
         Serial.println(F("Fail sign - Did you setup the keys?"));
       else
@@ -769,3 +756,4 @@ void loop() {
     }
   }
 }
+
